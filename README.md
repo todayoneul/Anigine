@@ -4,27 +4,41 @@
 
 ---
 
-## 결과물 미리보기 (Visual Previews)
+## 결과물 미리보기 및 데모 (Visual Previews & Demos)
 
-### 1. 렌더링 결과 (Rendered Snapshots)
+### 1. 성공적인 렌더링 사례 (Best Cases)
+Anigine은 색 대비가 명확하고 구조가 뚜렷한 이미지에서 가장 뛰어난 성능을 발휘합니다.
 
-| 게임 그래픽 스타일 | 복잡한 텍스처 (철조망) |
+| 게임 그래픽 스타일 | 복잡한 텍스처와 형태 | 명암 대비와 색감 보정 |
+|:---:|:---:|:---:|
+| ![Success 1](docs/assets/new_preview_1.png) | ![Success 2](docs/assets/new_preview_2.png) | ![Success 3](docs/assets/new_preview_3.png) |
+| **분석**: 단순화된 색면과 강렬한 외곽선이 조화를 이루어 전형적인 애니메이션 스타일을 구현합니다. | **분석**: 복잡한 철조망의 구조를 유지하면서도 불필요한 질감을 제거하여 깔끔한 만화적 표현이 가능합니다. | **분석**: 노을과 같은 그라데이션을 K-Means 퀀타이징을 통해 감각적인 색 분할로 변환합니다. |
+
+### 2. 도전적인 사례 및 한계 (Challenging Cases)
+알고리즘의 특성상 표현이 까다롭거나 의도와 다르게 출력될 수 있는 경우입니다.
+
+| 얇은 선의 소실 (Extreme Thin Lines) | 저조도 노이즈의 왜곡 (Low Light Noise) |
 |:---:|:---:|
-| ![Preview 1](docs/assets/new_preview_1.png) | ![Preview 2](docs/assets/new_preview_2.png) |
-
-| 명암 대비와 색감 보정 (노을) |
-|:---:|
-| ![Preview 3](docs/assets/new_preview_3.png) |
-
-### 2. 렌더링 데모 (Main Demo GIF)
-
-| Anigine Engine: Before & After |
-|:---:|
-| ![Main Demo](docs/assets/prismtoon_main_demo.gif) |
+| ![Challenging 1](docs/assets/wire_dns_3.0.png) | ![Challenging 2](docs/assets/example6_dns_0.5.png) |
+| **현상**: `--dot-noise-suppression`을 높게 설정할 경우, 얇은 철조망 선이 끊기거나 사라집니다. | **현상**: 광량이 부족한 곳의 입자 노이즈가 에지로 오인되어 지저분한 검은 점들이 생성됩니다. |
 
 ---
 
-> **Tip:** --show 옵션을 사용하면 변환 과정을 실시간으로 확인하며 파라미터를 튜닝할 수 있습니다.
+## 데모 및 한계점 논의 (Discussion of Demos & Limitations)
+
+### 1. 알고리즘의 강점 (Strengths)
+- **지능형 적응성**: `auto` 프리셋을 통해 이미지의 통계(채도, 에지 밀도, 노이즈)를 분석하고, 최적의 파라미터를 동적으로 설정하여 일관된 품질을 유지합니다.
+*   **깔끔한 외곽선**: Adaptive Threshold와 Morphological 후처리를 결합하여, 단순한 Canny Edge보다 훨씬 깨끗하고 "잉크 느낌"이 나는 윤곽선을 추출합니다.
+
+### 2. 알고리즘의 한계점 (Limitations)
+1.  **디테일과 노이즈의 트레이드오프**: 
+    - 점 노이즈를 제거하기 위한 형태학적 연산(Morphology)은 이미지의 아주 미세한 디테일(예: 멀리 있는 나뭇가지, 머리카락 한 올)을 함께 지워버리는 경향이 있습니다.
+2.  **K-Means 퀀타이징의 색상 왜곡**:
+    - 색상 수를 제한하는 과정에서 부드러운 그라데이션이 계단 현상(Banding)으로 나타나며, 중요도가 낮은 색상이 지배적인 색상에 흡수되어 사라질 수 있습니다.
+3.  **조명 조건에 따른 민감도**:
+    - 매우 어둡거나 역광이 심한 이미지에서는 CLAHE 보정으로도 극복하기 힘든 아티팩트(Artifact)가 발생하며, 특히 암부 노이즈가 검은색 에지로 증폭되는 문제가 있습니다.
+4.  **계산 복잡도**:
+    - 고해상도 이미지에서 K-Means 클러스터링과 Bilateral 필터링을 반복 적용할 경우 처리 시간이 급격히 증가하는 성능상의 한계가 존재합니다.
 
 ---
 
@@ -74,18 +88,6 @@
 
 ---
 
-## 실행 환경 및 설치 (Environment & Setup)
-
-- **Language**: Python 3.9+
-- **Library**: OpenCV (cv2), NumPy
-
-### 설치 방법
-```bash
-# 의존성 패키지 설치
-pip install -r requirements.txt
-```
-
----
 
 ## 사용법 및 실행 예시 (Usage Examples)
 
