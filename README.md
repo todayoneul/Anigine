@@ -1,6 +1,6 @@
 # Anigine: Animation Rendering Engine
 
-**Anigine**(Animation + Engine)은 지능형 이미지 분석과 고급 필터링 알고리즘을 결합하여, 일반 사진을 감각적인 애니메이션 스타일로 변환하는 전문가급 렌더링 엔진입니다.
+**Anigine**(Animation + Engine)은 지능형 이미지 분석과 고급 필터링 알고리즘을 결합하여, 일반 사진을 감각적인 애니메이션 스타일로 변환하는 렌더링 엔진입니다.
 
 ---
 
