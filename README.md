@@ -11,18 +11,28 @@
 ### 1. 성공적인 렌더링 사례 (Best Cases)
 Anigine은 색 대비가 명확하고 구조가 뚜렷한 이미지에서 가장 뛰어난 성능을 발휘합니다.
 
-| 게임 그래픽 스타일 | 명암 대비와 색감 보정 |
-|:---:|:---:|
-| ![Success 1](docs/assets/new_preview_1.png) | ![Success 2](docs/assets/new_preview_3.png) |
-| **분석**: 단순화된 색면과 강렬한 외곽선이 조화를 이루어 전형적인 애니메이션 스타일을 구현합니다. | **분석**: 노을과 같은 그라데이션을 K-Means 퀀타이징을 통해 감각적인 색 분할로 변환합니다. |
+| 게임 그래픽 스타일 | 명암 대비와 색감 보정 | 인물 및 근접 촬영 |
+|:---:|:---:|:---:|
+| ![Success 1](docs/assets/new_preview_1.png) | ![Success 2](docs/assets/new_preview_3.png) | ![Success 3](outputs/프사_cartoon.png) |
+| **분석**: 단순화된 색면과 강렬한 외곽선이 조화를 이루어 전형적인 애니메이션 스타일을 구현합니다. | **분석**: 노을과 같은 그라데이션을 K-Means 퀀타이징을 통해 감각적인 색 분할로 변환합니다. | **분석**: 인물의 특징을 유지하면서 피부 톤을 매끄럽게 처리하고 적절한 채도 보정을 적용합니다. |
+
+| 고화질 풍경 및 건물 | 대담한 색 분리 (Color-pop) | 활기찬 색감 (Vibrant) |
+|:---:|:---:|:---:|
+| ![Success 4](outputs/고화질+요소많음_cartoon.png) | ![Success 5](outputs/어두움+노을_cartoon.png) | ![Success 6](outputs/핼스_cartoon.png) |
+| **분석**: 복잡한 요소가 많은 고화질 이미지에서도 주요 구조를 놓치지 않고 깔끔하게 렌더링합니다. | **분석**: 어두운 환경의 노을을 강렬한 색 대비로 표현하여 팝아트적인 느낌을 강조합니다. | **분석**: 실내 조명 아래의 피사체를 생동감 있는 색상으로 변환하여 역동성을 부여합니다. |
 
 ### 2. 도전적인 사례 및 한계 (Challenging Cases)
 알고리즘의 특성상 표현이 까다롭거나 의도와 다르게 출력될 수 있는 경우입니다.
 
-| 얇은 선의 소실 (Extreme Thin Lines) | 저조도 노이즈의 왜곡 (Low Light Noise) |
-|:---:|:---:|
-| ![Challenging 1](docs/assets/wire_dns_3.0.png) | ![Challenging 2](docs/assets/example6_dns_0.5.png) |
-| **현상**: `--dot-noise-suppression`을 높게 설정할 경우, 얇은 철조망 선이 끊기거나 사라집니다. | **현상**: 광량이 부족한 곳의 입자 노이즈가 에지로 오인되어 지저분한 검은 점들이 생성됩니다. |
+| 얇은 선의 소실 (Extreme Thin Lines) | 저조도 노이즈의 왜곡 (Low Light Noise) | 과도한 노이즈와 텍스처 |
+|:---:|:---:|:---:|
+| ![Challenging 1](docs/assets/wire_dns_3.0.png) | ![Challenging 2](docs/assets/example6_dns_0.5.png) | ![Challenging 3](outputs/철조망_cartoon.png) |
+| **현상**: `--dot-noise-suppression`을 높게 설정할 경우, 얇은 철조망 선이 끊기거나 사라집니다. | **현상**: 광량이 부족한 곳의 입자 노이즈가 에지로 오인되어 지저분한 검은 점들이 생성됩니다. | **현상**: 미세한 텍스처가 너무 많을 경우, 점 노이즈 억제 필터가 디테일을 뭉개버릴 수 있습니다. |
+
+| 고노이즈 이미지의 뭉개짐 | 역광 및 암부 디테일 소실 | 포커스 아웃/블러 이미지 |
+|:---:|:---:|:---:|
+| ![Challenging 4](outputs/example2_cartoon.png) | ![Challenging 5](outputs/어두운배경_cartoon.png) | ![Challenging 6](outputs/흔들림+기타_cartoon.png) |
+| **현상**: 원본의 노이즈가 심할 경우, 스무딩 과정에서 형태가 모호해지는 경향이 있습니다. | **현상**: 암부가 지배적인 이미지에서는 에지 검출이 어려워 구조가 단순화될 위험이 있습니다. | **현상**: 초점이 맞지 않거나 흔들린 이미지는 에지 검출이 부정확하여 만화적 느낌이 반감됩니다. |
 
 ---
 
