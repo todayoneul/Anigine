@@ -6,6 +6,8 @@
 
 ## 결과물 미리보기 및 데모 (Visual Previews & Demos)
 
+![Prismtoon Main Demo](docs/assets/prismtoon_main_demo.gif)
+
 ### 1. 성공적인 렌더링 사례 (Best Cases)
 Anigine은 색 대비가 명확하고 구조가 뚜렷한 이미지에서 가장 뛰어난 성능을 발휘합니다.
 
